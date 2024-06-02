@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>XYZ College/School - Student Registration Form</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+}
+
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h2, h3 {
+  text-align: center;
+  color: #333;
+}
+
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  color: #666;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type="submit"] {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+table.info {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+table.info th,
+table.info td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+table.info th {
+  background-color: #f2f2f2;
+}
+    </style>
+</head>
+<body>
+  <div class="container">
+    <h2>XYZ College/School</h2>
+    <h3>Student Registration Form</h3>
+    
+    <form id="registrationForm">
+      <div>
+        <label for="name">Student Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      
+      <div>
+        <label for="fatherName">Father's Name:</label>
+        <input type="text" id="fatherName" name="fatherName" required>
+      </div>
+      
+      <div>
+        <label for="motherName">Mother's Name:</label>
+        <input type="text" id="motherName" name="motherName" required>
+      </div>
+      
+      <div>
+        <label>Gender:</label>
+        <div>
+          <input type="radio" id="male" name="gender" value="Male" required>
+          <label for="male">Male</label>
+        </div>
+        <div>
+          <input type="radio" id="female" name="gender" value="Female" required>
+          <label for="female">Female</label>
+        </div>
+        <div>
+          <input type="radio" id="other" name="gender" value="Other" required>
+          <label for="other">Other</label>
+        </div>
+      </div>
+      
+      <div>
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+      </div>
+      
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      
+      <div>
+        <label for="level">Level:</label>
+        <select id="level" name="level" required>
+          <option value="High School">High School</option>
+          <!-- Add more level options here -->
+        </select>
+      </div>
+      
+      <div>
+        <label for="department">Department:</label>
+        <select id="department" name="department" required>
+          <option value="Electrical Engineering">Electrical Engineering</option>
+          <!-- Add more department options here -->
+        </select>
+      </div>
+      
+      <div>
+        <label for="mobile">Tel/Mobile:</label>
+        <input type="tel" id="mobile" name="mobile" required>
+      </div>
+      
+      <div>
+        <button type="submit">Submit</button>
+      </div>
+    </form>
+    
+    <div id="output" style="display: none;">
+      <h3>Submitted Data:</h3>
+      <table id="dataTable" class="info">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Date of birth</th>
+            <th>email</th>
+            <th>Mobile Number</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+  
+  <script >
+    document.addEventListener('DOMContentLoaded', function() {
+  var form = document.getElementById('registrationForm');
+  var output = document.getElementById('output');
+  var dataTable = document.getElementById('dataTable');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var name = document.getElementById('name').value;
+    var dob = document.getElementById('dob').value;
+    var email = document.getElementById('email').value;
+    var mobile = document.getElementById('mobile').value;
+    var gender = document.querySelector('input[name="gender"]:checked').value;
+
+    var row = dataTable.insertRow();
+    var nameCell = row.insertCell();
+    var dobCell = row.insertCell();
+    var emailCell = row.insertCell();
+    var mobileCell = row.insertCell();
+
+    nameCell.textContent = addTitle(name, gender);
+    dobCell.textContent = dob;
+    emailCell.textContent = email;
+    mobileCell.textContent = mobile;
+
+    row.classList.add('info');
+
+    form.reset();
+    output.style.display = 'block';
+  });
+
+  function addTitle(name, gender) {
+    if (gender === 'Male') {
+      return 'Mr. ' + name;
+    } else if (gender === 'Female') {
+      return 'Miss. ' + name;
+    } else {
+      return name;
+    }
+  }
+});
+  </script>
+</body>
+</html>
