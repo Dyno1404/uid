@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pizza Form</title>
+  <style> body {
+    font-family: Arial, sans-serif;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  form {
+    margin-bottom: 20px;
+  }
+  
+  fieldset {
+    margin-bottom: 10px;
+  }
+  
+  label {
+    display: block;
+    margin-top: 5px;
+  }
+  
+  input[type="submit"] {
+    margin-top: 10px;
+  }
+  
+  .order-summary {
+    display: none;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-top: 20px;
+  }
+  
+  .order-summary table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  
+  .order-summary th,
+  .order-summary td {
+    padding: 5px;
+    text-align: left;
+  }</style>
+</head>
+<body>
+  <h2>Pizza Form</h2>
+  
+  <form id="pizzaForm">
+    <fieldset>
+      <legend>Personal Info</legend>
+      <label for="firstName">First Name:</label>
+      <input type="text" id="firstName" name="firstName" required><br>
+      
+      <label for="lastName">Last Name:</label>
+      <input type="text" id="lastName" name="lastName" required><br>
+      
+      <label for="phone">Phone:</label>
+      <input type="tel" id="phone" name="phone" required><br>
+    </fieldset>
+    
+    <fieldset>
+      <legend>Pizza</legend>
+      <label>Size:</label><br>
+      <input type="radio" id="small" name="size" value="Small" required>
+      <label for="small">Small</label><br>
+      <input type="radio" id="medium" name="size" value="Medium" required>
+      <label for="medium">Medium</label><br>
+      <input type="radio" id="large" name="size" value="Large" required>
+      <label for="large">Large</label><br>
+      
+      <label>Toppings (check all that apply):</label><br>
+      <input type="checkbox" id="extraCheese" name="toppings" value="Extra Cheese">
+      <label for="extraCheese">Extra Cheese</label>
+      <input type="checkbox" id="pepperoni" name="toppings" value="Pepperoni">
+      <label for="pepperoni">Pepperoni</label>
+      <input type="checkbox" id="sausage" name="toppings" value="Sausage">
+      <label for="sausage">Sausage</label><br>
+      <input type="checkbox" id="mushrooms" name="toppings" value="Mushrooms">
+      <label for="mushrooms">Mushrooms</label>
+      <input type="checkbox" id="blackOlives" name="toppings" value="Black Olives">
+      <label for="blackOlives">Black Olives</label>
+      <input type="checkbox" id="greenPeppers" name="toppings" value="Green Peppers">
+      <label for="greenPeppers">Green Peppers</label><br>
+      <input type="checkbox" id="tomatoes" name="toppings" value="Tomatoes">
+      <label for="tomatoes">Tomatoes</label>
+      <input type="checkbox" id="onions" name="toppings" value="Onions">
+      <label for="onions">Onions</label>
+      <input type="checkbox" id="anchovies" name="toppings" value="Anchovies">
+      <label for="anchovies">Anchovies</label><br>
+    </fieldset>
+    
+    <input type="submit" value="Enter my information">
+  </form>
+  
+  <div id="orderSummary" class="order-summary">
+    <h3>Order Summary</h3>
+    <p><strong>First Name:</strong> <span id="firstNameSummary"></span></p>
+    <p><strong>Last Name:</strong> <span id="lastNameSummary"></span></p>
+    <p><strong>Mobile Number:</strong> <span id="phoneSummary"></span></p>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="orderItems"></tbody>
+      <tfoot>
+        <tr>
+          <td colspan="2"><strong>Total</strong></td>
+          <td><strong id="totalPrice"></strong></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  
+  <script >document.addEventListener('DOMContentLoaded', function() {
+    var form = document.getElementById('pizzaForm');
+    var orderSummary = document.getElementById('orderSummary');
+    var firstNameSummary = document.getElementById('firstNameSummary');
+    var lastNameSummary = document.getElementById('lastNameSummary');
+    var phoneSummary = document.getElementById('phoneSummary');
+    var orderItems = document.getElementById('orderItems');
+    var totalPrice = document.getElementById('totalPrice');
+  
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+  
+      var firstName = document.getElementById('firstName').value;
+      var lastName = document.getElementById('lastName').value;
+      var phone = document.getElementById('phone').value;
+      var size = document.querySelector('input[name="size"]:checked').value;
+      var toppings = Array.from(document.querySelectorAll('input[name="toppings"]:checked')).map(function(checkbox) {
+        return checkbox.value;
+      });
+  
+      var pizzaPrice = 0;
+      if (size === 'Small') {
+        pizzaPrice = 250;
+      } else if (size === 'Medium') {
+        pizzaPrice = 300;
+      } else if (size === 'Large') {
+        pizzaPrice = 350;
+      }
+  
+      var toppingsPrice = toppings.length * 50;
+      var totalCost = pizzaPrice + toppingsPrice;
+  
+      var orderItemsHtml = '<tr><td>Pizza (' + size + ')</td><td>Rs ' + pizzaPrice + '</td><td>Rs ' + pizzaPrice + '</td></tr>';
+      if (toppings.length > 0) {
+        orderItemsHtml += '<tr><td>Toppings (' + toppings.join(', ') + ')</td><td>Rs ' + toppingsPrice + '</td><td>Rs ' + toppingsPrice + '</td></tr>';
+      }
+  
+      firstNameSummary.textContent = firstName;
+      lastNameSummary.textContent = lastName;
+      phoneSummary.textContent = phone;
+      orderItems.innerHTML = orderItemsHtml;
+      totalPrice.textContent = 'Rs ' + totalCost;
+  
+      form.style.display = 'none';
+      orderSummary.style.display = 'block';
+    });
+  });</script>
+</body>
+</html>
