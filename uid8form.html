@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Registration Form</title>
+  <style>
+    body {
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  color: #333;
+}
+
+form {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+}
+
+input[type="submit"] {
+  margin-top: 10px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+    </style>
+</head>
+<body>
+  <h2>Student Registration Form</h2>
+  
+  <form id="registrationForm">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" ><br>
+    
+    <label for="father">Father Name:</label>
+    <input type="text" id="father" name="father"><br>
+    
+    <label for="postal">Postal Address:</label>
+    <input type="text" id="postal" name="postal" ><br>
+    
+    <label for="personal">Personal Address:</label>
+    <input type="text" id="personal" name="personal" ><br>
+    
+    <label>Sex:</label>
+    <input type="radio" id="male" name="sex" value="Male">
+    <label for="male">Male</label>
+    <input type="radio" id="female" name="sex" value="Female" >
+    <label for="female">Female</label><br>
+    
+    <label for="city">City:</label>
+    <select id="city" name="city" >
+      <option value="">jaipur</option>
+      <!-- Add city options here -->
+    </select><br>
+    
+    <label for="course">Course:</label>
+    <select id="course" name="course" >
+      <option value="">cse</option>
+      <!-- Add course options here -->
+    </select><br>
+    
+    <label for="district">District:</label>
+    <select id="district" name="district" >
+      <option value="">eranakulam</option>
+      <!-- Add district options here -->
+    </select><br>
+    
+    <label for="state">State:</label>
+    <select id="state" name="state" >
+      <option value="">kerala</option>
+      <!-- Add state options here -->
+    </select><br>
+    
+    <label for="pincode">PinCode:</label>
+    <input type="text" id="pincode" name="pincode" ><br>
+    
+    <label for="email">Email Id:</label>
+    <input type="email" id="email" name="email" ><br>
+    
+    <label for="dob">DOB:</label>
+    <input type="date" id="dob" name="dob" ><br>
+    
+    <label for="mobile">MobileNo:</label>
+    <input type="tel" id="mobile" name="mobile" ><br>
+    
+    <input type="submit" value="Submit Form">
+  </form>
+  
+  <div id="output" style="display: none;">
+    <h3>Submitted Data:</h3>
+    <table id="dataTable">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Date of birth</th>
+          <th>email</th>
+          <th>Mobile Number</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    
+    <div id="stateInfo"></div>
+  </div>
+  
+  <script >
+    document.addEventListener('DOMContentLoaded', function() {
+  var form = document.getElementById('registrationForm');
+  var output = document.getElementById('output');
+  var dataTable = document.getElementById('dataTable');
+  var stateInfo = document.getElementById('stateInfo');
+
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var name = document.getElementById('name').value;
+    var dob = document.getElementById('dob').value;
+    var email = document.getElementById('email').value;
+    var mobile = document.getElementById('mobile').value;
+    var city = document.getElementById('city').value;
+    var state = document.getElementById('state').value;
+
+    var row = dataTable.insertRow();
+    var nameCell = row.insertCell();
+    var dobCell = row.insertCell();
+    var emailCell = row.insertCell();
+    var mobileCell = row.insertCell();
+
+    nameCell.textContent = name;
+    dobCell.textContent = dob;
+    emailCell.textContent = email;
+    mobileCell.textContent = mobile;
+
+    var stateData = {
+      'ERNAKULAM': '682020',
+      'ALAPUZHA': '688001',
+      'KOLLAM': '691001'
+    };
+
+    if (stateData.hasOwnProperty(city.toUpperCase())) {
+      var pincode = stateData[city.toUpperCase()];
+      stateInfo.innerHTML = 'The state should have ' + state + ', city should have ' + city + '. Rest you can add whatever you want. When these cities are selected the following pincode should be automatically added.<br>City: ' + city.toUpperCase() + ', Pincode: ' + pincode;
+    } else {
+      stateInfo.textContent = '';
+    }
+
+    form.reset();
+    output.style.display = 'block';
+  });
+});
+  </script>
+</body>
+</html>
